@@ -31,7 +31,7 @@ class UserSignup extends Component {
       email: this.state.email,
       password: this.state.password
     };
-debugger;
+
     var that = this;
     fetch("http://localhost:3333/api/users", {method: 'POST', body: userInfo})
       .then(function(res) {
