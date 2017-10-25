@@ -26,23 +26,22 @@ router.post("/", function(req, res, next) {
 });
 
 router.post("/login", function(req, res, next) {
-  /*
-    Get username and password
-    Lookup user in db
-    verify(?) their token, issue new one I guess? I have no clue
-  */
-  console.log(req.body);
-
   if (req.body.username && req.body.password) {
     db.User
       .findOne(req.params.username)
       .then(function(user) {
         if (user.password === req.body.password) {
           console.log("PASSWORDS MATCH!");
-          // var payload = { id: user.id };
-          // var token = jwt.sign({ fuck: "this" }, "secret");
-          // res.json({ message: "ok", token: token });
-          res.json("eriogjeorigjeog");
+          var payload = { id: user.id };
+          var token = jwt.sign({ what: "ever" }, "secret");
+          res.json({
+            message: "ok",
+            username: user.username,
+            email: user.email,
+            token: token
+          });
+        } else {
+          res.status(400).send("Bad request");
         }
       })
       .catch(function(reason) {
