@@ -40,7 +40,8 @@ class UserSignup extends Component {
 
         that.props.dispatch(signupUser(userInfo.username,
                           userInfo.email,
-                          userInfo.password));
+                          "ID")); // ***NEED TO GET THE USER ID FROM SERVER.
+
       })
       .catch(function(err) {
         console.log(err);
@@ -51,7 +52,9 @@ class UserSignup extends Component {
     return(
       <div className="row something">
         <div className="login-form-body col-4 offset-4">
-          <LoginForm handleSubmit={this.handleSubmit} handleChange={this.handleChange}/>
+          <LoginForm handleSubmit={this.handleSubmit}
+                      handleChange={this.handleChange}
+                      showEmail={true}/>
         </div>
       </div>
     );

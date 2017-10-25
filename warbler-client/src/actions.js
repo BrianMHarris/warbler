@@ -1,19 +1,27 @@
 export const LOGIN_USER = 'LOGIN_USER';
 export const SIGNUP_USER = 'SIGNUP_USER';
 
-export function signupUser(username, email) {
+export function signupUser(username, email, userId) {
   return {
     type: SIGNUP_USER,
     payload: {
+      isLoggedIn: true,
       username: username,
-      email: email
+      email: email,
+      userId: userId
     }
   }
 }
 
-export function loginUser() {
+// These do basically the same thing, can we use a generic LOGIN?
+export function loginUser(username, email, userId) {
   return {
     type: LOGIN_USER,
-    payload: true
+    payload: {
+      isLoggedIn: true,
+      username: username,
+      email: email,
+      userId: userId
+    }
   }
 }

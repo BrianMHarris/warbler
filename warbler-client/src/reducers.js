@@ -1,15 +1,17 @@
 import { LOGIN_USER, SIGNUP_USER } from './actions';
 
 const DEFAULT_STATE = {
-  isLoggedIn: false
+  isLoggedIn: false,
+  userId: null
 }
 
 function rootReducer(state=DEFAULT_STATE, action) {
   switch(action.type) {
     case SIGNUP_USER:
-      return { isLoggedIn: true };
+      debugger;
+      return Object.assign({}, state, { ...action.payload });
     case LOGIN_USER:
-      return { isLoggedIn: true };
+      return Object.assign({}, state, { ...action.payload });
     default:
       return state;
   }
