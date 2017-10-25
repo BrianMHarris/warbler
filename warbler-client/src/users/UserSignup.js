@@ -25,14 +25,13 @@ class UserSignup extends Component {
   }
 
   handleSubmit(event) {
-    debugger
     event.preventDefault();
     let userInfo = {
-      username: event.target.form[0].value,
-      email: event.target.form[1].value,
-      password: event.target.form[2].value
+      username: this.state.username,
+      email: this.state.email,
+      password: this.state.password
     };
-
+debugger;
     var that = this;
     fetch("http://localhost:3333/api/users", {method: 'POST', body: userInfo})
       .then(function(res) {
