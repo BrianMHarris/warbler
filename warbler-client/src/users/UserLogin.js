@@ -43,13 +43,14 @@ class UserLogin extends Component {
       .then(function(res) {
         if (res.ok === false)
           throw res;
-
-        debugger;
-        that.props.dispatch(loginUser(userInfo.username,
-                          "email", // ***NEED TO GET EMAIL FROM SERVER.
-                          "ID")); // ***NEED TO GET THE USER ID FROM SERVER.
-
+        return res.json();
       })
+        .then(function(body) {
+          debugger;
+          that.props.dispatch(loginUser(body.username,
+                            body.email, // ***NEED TO GET EMAIL FROM SERVER.
+                            "ID")); // ***NEED TO GET THE USER ID FROM SERVER.
+        })
       .catch(function(err) {
         console.log(err);
       });
