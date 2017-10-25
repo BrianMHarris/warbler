@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './UserLogin.css';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import LoginForm from './LoginForm'
 import { loginUser } from '../actions'
 
@@ -31,11 +32,19 @@ class UserLogin extends Component {
     };
 
     var that = this;
-    fetch("http://localhost:3333/api/users/login", {method: 'POST', body: userInfo})
+    fetch("http://localhost:3333/api/users/login", {
+      method: "POST",
+      body: JSON.stringify(userInfo),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      }
+    })
       .then(function(res) {
         if (res.ok === false)
           throw res;
 
+        debugger;
         that.props.dispatch(loginUser(userInfo.username,
                           "email", // ***NEED TO GET EMAIL FROM SERVER.
                           "ID")); // ***NEED TO GET THE USER ID FROM SERVER.
@@ -47,15 +56,28 @@ class UserLogin extends Component {
   }
 
   render() {
-    return(
-      <div className="row something">
-        <div className="login-form-body col-4 offset-4">
-          <LoginForm handleSubmit={this.handleSubmit}
-                      handleChange={this.handleChange}/>
+    if (this.props.isLoggedIn) {
+      return (
+        <Redirect to={`/home/${this.props.username}`} push />
+      )
+    } else {
+      return(
+        <div className="row something">
+          <div className="login-form-body col-4 offset-4">
+            <LoginForm handleSubmit={this.handleSubmit}
+                        handleChange={this.handleChange}/>
+          </div>
         </div>
-      </div>
-    );
+      );
+    }
   }
 }
 
-export default connect()(UserLogin);
+const mapStateToProps = function(state) {
+  return {
+    isLoggedIn: state.isLoggedIn,
+    username: state.username
+  };
+}
+
+export default connect(mapStateToProps)(UserLogin);
