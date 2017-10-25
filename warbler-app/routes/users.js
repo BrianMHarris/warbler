@@ -47,6 +47,8 @@ router.post("/login", function(req, res, next) {
       .catch(function(reason) {
         res.status(404).send("Whoops, 404");
       });
+  } else {
+    res.status(400).send("Bad request");
   }
 });
 
